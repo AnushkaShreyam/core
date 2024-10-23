@@ -130,26 +130,6 @@
 #include <tools/time.hxx>
 #include <memory>
 
-/* PPT ColorScheme Slots
-#define PPT_COLSCHEME                       (0x08000000)
-#define PPT_COLSCHEME_HINTERGRUND           (0x08000000)
-#define PPT_COLSCHEME_TEXT_UND_ZEILEN       (0x08000001)
-#define PPT_COLSCHEME_TITELTEXT             (0x08000003)
-#define PPT_COLSCHEME_A_UND_HYPERLINK       (0x08000006)
-
-#define ANSI_CHARSET            0
-#define SYMBOL_CHARSET          2
-
-Font Families 
-#define FF_ROMAN                0x10
-#define FF_SWISS                0x20
-#define FF_MODERN               0x30
-#define FF_SCRIPT               0x40
-#define FF_DECORATIVE           0x50
-
-#define DEFAULT_PITCH           0x00
-#define FIXED_PITCH             0x01
-#define VARIABLE_PITCH          0x02*/
 
 using namespace ::com::sun::star    ;
 using namespace uno                 ;
@@ -420,18 +400,6 @@ SvStream& ReadPptFontEntityAtom( SvStream& rIn, PptFontEntityAtom& rAtom )
        .ReadUChar( rAtom.lfQuality )
        .ReadUChar( lfPitchAndFamily );
 
-    /*switch( lfCharset )
-    {
-        case SYMBOL_CHARSET :
-            rAtom.eCharSet = RTL_TEXTENCODING_SYMBOL;
-        break;
-        case ANSI_CHARSET :
-            rAtom.eCharSet = RTL_TEXTENCODING_MS_1252;
-        break;
-
-        default :
-            rAtom.eCharSet = osl_getThreadTextEncoding();
-    }*/
 
         switch (lfCharset)
     {
@@ -445,33 +413,6 @@ SvStream& ReadPptFontEntityAtom( SvStream& rIn, PptFontEntityAtom& rAtom )
             rAtom.eCharSet = osl_getThreadTextEncoding();
     }
 
-    
-    /*switch ( lfPitchAndFamily & 0xf0 )
-    {
-        case FF_ROMAN:
-            rAtom.eFamily = FAMILY_ROMAN;
-        break;
-
-        case FF_SWISS:
-            rAtom.eFamily = FAMILY_SWISS;
-        break;
-
-        case FF_MODERN:
-            rAtom.eFamily = FAMILY_MODERN;
-        break;
-
-        case FF_SCRIPT:
-            rAtom.eFamily = FAMILY_SCRIPT;
-        break;
-
-        case FF_DECORATIVE:
-             rAtom.eFamily = FAMILY_DECORATIVE;
-        break;
-
-        default:
-            rAtom.eFamily = FAMILY_DONTKNOW;
-        break;
-    }*/
 
     switch (lfPitchAndFamily & 0xf0)
 {
@@ -500,18 +441,6 @@ SvStream& ReadPptFontEntityAtom( SvStream& rIn, PptFontEntityAtom& rAtom )
         break;
 }
 
-    /*switch ( lfPitchAndFamily & 0x0f )
-    {
-        case FIXED_PITCH:
-            rAtom.ePitch = PITCH_FIXED;
-        break;
-
-        case DEFAULT_PITCH:
-        case VARIABLE_PITCH:
-        default:
-            rAtom.ePitch = PITCH_VARIABLE;
-        break;
-    }*/
     switch (lfPitchAndFamily & 0x0f)
     {
         case static_cast<sal_uInt32>(ppt::Pitch::FIXED):
